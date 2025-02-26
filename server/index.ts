@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { connectDB } from "./db/connection";
+import { setupAuth } from "./auth";
 
 const app = express();
 app.use(express.json());
@@ -40,6 +41,9 @@ app.use((req, res, next) => {
 (async () => {
   // Connect to MongoDB before starting the server
   await connectDB();
+
+  // Setup authentication
+  setupAuth(app);
 
   const server = await registerRoutes(app);
 
