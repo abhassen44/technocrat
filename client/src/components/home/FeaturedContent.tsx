@@ -88,10 +88,10 @@ export function FeaturedContent() {
 
   if (tutorialsLoading || blogsLoading) {
     return (
-      <div className="container py-16">
-        <div className="animate-pulse space-y-16">
-          {[...Array(2)].map((_, i) => (
-            <div key={i}>
+      <section className="py-16">
+        <div className="container">
+          <div className="animate-pulse space-y-16">
+            <div>
               <div className="h-10 bg-muted rounded w-1/4 mb-8"></div>
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {[...Array(3)].map((_, j) => (
@@ -99,9 +99,17 @@ export function FeaturedContent() {
                 ))}
               </div>
             </div>
-          ))}
+            <div>
+              <div className="h-10 bg-muted rounded w-1/4 mb-8"></div>
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {[...Array(3)].map((_, j) => (
+                  <div key={j} className="h-64 bg-muted rounded"></div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
     );
   }
 

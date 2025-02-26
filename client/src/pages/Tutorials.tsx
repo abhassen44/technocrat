@@ -28,7 +28,19 @@ export default function Tutorials() {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="container py-8">
+        <h1 className="text-4xl font-bold mb-8">Tutorials</h1>
+        <div className="animate-pulse space-y-8">
+          <div className="max-w-sm h-10 bg-muted rounded"></div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="h-64 bg-muted rounded"></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
