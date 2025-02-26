@@ -1,88 +1,38 @@
-import { 
-  type Tutorial, type Blog, type Event, type Project,
-  type InsertTutorialSchema, type InsertBlogSchema,
-  type InsertEventSchema, type InsertProjectSchema
-} from "@shared/schema";
+import { Tutorial, Blog, Event, Project } from './db/models';
 
 export interface IStorage {
-  getTutorials(): Promise<Tutorial[]>;
-  getTutorialById(id: number): Promise<Tutorial | undefined>;
-  getBlogs(): Promise<Blog[]>;
-  getBlogById(id: number): Promise<Blog | undefined>;
-  getEvents(): Promise<Event[]>;
-  getProjects(): Promise<Project[]>;
+  getTutorials(): Promise<any[]>;
+  getTutorialById(id: string): Promise<any | undefined>;
+  getBlogs(): Promise<any[]>;
+  getBlogById(id: string): Promise<any | undefined>;
+  getEvents(): Promise<any[]>;
+  getProjects(): Promise<any[]>;
 }
 
-const mockTutorials: Tutorial[] = [
-  {
-    id: 1,
-    title: "Getting Started with Arduino",
-    description: "Learn the basics of Arduino programming",
-    content: "Arduino is an open-source electronics platform...",
-    level: "Beginner",
-    category: "Arduino",
-    imageUrl: "https://placehold.co/600x400"
-  },
-  // Add more mock tutorials
-];
-
-const mockBlogs: Blog[] = [
-  {
-    id: 1,
-    title: "Latest Trends in IoT",
-    content: "The Internet of Things (IoT) continues to evolve...",
-    category: "IoT",
-    imageUrl: "https://placehold.co/600x400"
-  },
-  // Add more mock blogs
-];
-
-const mockEvents: Event[] = [
-  {
-    id: 1,
-    title: "Arduino Workshop 2024",
-    description: "Hands-on workshop for Arduino enthusiasts",
-    date: new Date("2024-06-15"),
-    type: "Workshop"
-  },
-  // Add more mock events
-];
-
-const mockProjects: Project[] = [
-  {
-    id: 1,
-    title: "Smart Home Automation",
-    description: "A DIY project for home automation using Arduino",
-    imageUrl: "https://placehold.co/600x400",
-    category: "IoT"
-  },
-  // Add more mock projects
-];
-
-export class MemStorage implements IStorage {
-  async getTutorials(): Promise<Tutorial[]> {
-    return mockTutorials;
+export class MongoDBStorage implements IStorage {
+  async getTutorials() {
+    return await Tutorial.find().lean();
   }
 
-  async getTutorialById(id: number): Promise<Tutorial | undefined> {
-    return mockTutorials.find(t => t.id === id);
+  async getTutorialById(id: string) {
+    return await Tutorial.findById(id).lean();
   }
 
-  async getBlogs(): Promise<Blog[]> {
-    return mockBlogs;
+  async getBlogs() {
+    return await Blog.find().lean();
   }
 
-  async getBlogById(id: number): Promise<Blog | undefined> {
-    return mockBlogs.find(b => b.id === id);
+  async getBlogById(id: string) {
+    return await Blog.findById(id).lean();
   }
 
-  async getEvents(): Promise<Event[]> {
-    return mockEvents;
+  async getEvents() {
+    return await Event.find().lean();
   }
 
-  async getProjects(): Promise<Project[]> {
-    return mockProjects;
+  async getProjects() {
+    return await Project.find().lean();
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new MongoDBStorage();

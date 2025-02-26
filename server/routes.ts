@@ -1,15 +1,30 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import mongoose from "mongoose";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Health check endpoint
+  app.get("/api/health", (_req, res) => {
+    const dbStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
+    res.json({ 
+      status: 'ok',
+      database: dbStatus
+    });
+  });
+
   app.get("/api/tutorials", async (_req, res) => {
     const tutorials = await storage.getTutorials();
     res.json(tutorials);
   });
 
   app.get("/api/tutorials/:id", async (req, res) => {
-    const tutorial = await storage.getTutorialById(Number(req.params.id));
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      res.status(400).json({ message: "Invalid ID format" });
+      return;
+    }
+
+    const tutorial = await storage.getTutorialById(req.params.id);
     if (!tutorial) {
       res.status(404).json({ message: "Tutorial not found" });
       return;
@@ -23,7 +38,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.get("/api/blogs/:id", async (req, res) => {
-    const blog = await storage.getBlogById(Number(req.params.id));
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      res.status(400).json({ message: "Invalid ID format" });
+      return;
+    }
+
+    const blog = await storage.getBlogById(req.params.id);
     if (!blog) {
       res.status(404).json({ message: "Blog not found" });
       return;
