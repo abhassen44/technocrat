@@ -1,0 +1,75 @@
+Prompt:
+
+You are an expert MERN stack developer and UI/UX designer specializing in highly interactive and animated web experiences. Your task is to build a feature-rich, modern website using the MERN stack (MongoDB, Express, React, Node.js) with a strong emphasis on smooth animations and engaging interactions. The website structure is inspired by lastminuteengineers.com but with a cooler, more interactive design using GSAP and Framer Motion for animations.
+
+Website Structure & Features:
+1. Landing Page (Homepage)
+Hero Section: Large, dynamic banner with a catchy headline, GSAP text animations, and an engaging call-to-action (e.g., "Explore Tutorials", "Join Events").
+Quick Navigation: Interactive buttons/cards with hover effects linking to major sections (Tutorials, Projects, Blogs, etc.).
+Featured Content: Highlight top tutorials, projects, or blog posts with smooth fade-ins and parallax effects.
+2. Navigation Bar
+Sticky Navbar: Stays at the top while scrolling with subtle animations.
+Menu Options: Home | Blogs | Tutorials | Events | Projects | Merch | About Us.
+Dropdowns (Optional): Subcategories under Blogs, Tutorials, and Projects with smooth slide-down animations.
+3. Tutorials Page
+Search & Filters: Categorize tutorials (Beginner, Intermediate, Advanced) with animated dropdowns.
+List/Grid View: Display tutorials with thumbnails, smooth hover zoom-in effects, and animated loading between tutorials.
+4. Blogs Page
+Latest & Popular Blogs: Well-structured blog listings with image fade-ins and animated text reveals.
+Tags & Categories: Allow users to filter by topics with sliding animations.
+Smooth Scrolling: Blog previews appear dynamically as users scroll (GSAP scroll-triggered animations).
+5. Events Page
+Upcoming Events: List of workshops, hackathons, or webinars with animated countdown timers.
+Registration CTA: Buttons with engaging hover animations and subtle pulses.
+Countdown Timer: Animated countdown to major events.
+6. Projects Page
+Project Showcase: Interactive cards with hover effects, image scaling, and smooth modal pop-ups.
+Community Contributions: Allow users to submit projects with animated form transitions.
+7. Merch Page
+Product Listings: T-shirts, stickers, gadgets, etc., with interactive cards and zoom effects.
+Interactive Cart: Smooth animations for adding/removing items.
+Payment Integration: Secure checkout process with progressive form animations.
+8. About Us Page
+Team Introduction: Fun, animated bios of team members with hover effects.
+Mission & Vision: Engaging storytelling with text and image fade-ins.
+Contact Form: Interactive input fields with smooth animations when typing/selecting.
+9. Footer
+Quick Links: Important navigation links with hover interactions.
+Social Media Icons: Animated hover effects.
+Newsletter Signup: Subtle entry animations for the form.
+Technology Stack & Implementation
+Frontend (React + GSAP + Framer Motion)
+Components:
+Navbar.js (Sticky Navigation Bar)
+Hero.js (Animated Landing Page)
+TutorialsList.js (Tutorial Listings)
+BlogList.js (Blog Listings)
+Events.js (Event Listings & Countdown)
+Projects.js (Project Showcase)
+Merch.js (Product Listings & Cart)
+About.js (About Us Page)
+Footer.js (Animated Footer with Links & Socials)
+State Management: Context API / Redux for global state handling.
+Routing: React Router for smooth navigation.
+Animations: GSAP & Framer Motion for seamless transitions, page reveals, and hover effects.
+Backend (Node.js & Express)
+API Endpoints:
+/api/tutorials (Fetch tutorials)
+/api/blogs (Manage blogs)
+/api/events (Event registrations)
+/api/projects (User project submissions)
+/api/merch (Product listings & checkout)
+Middleware:
+JWT-based authentication.
+Error handling middleware.
+Database (MongoDB & Mongoose)
+Collections: Users, Tutorials, Blogs, Events, Projects, Merch.
+Deployment
+Frontend: Vercel / Netlify with optimized lazy-loading and bundling.
+Backend: Render / DigitalOcean / AWS.
+Database: MongoDB Atlas for scalable storage.
+CI/CD: GitHub Actions for automated deployments.
+Development Focus:
+Fluid Animations: Use GSAP and Framer Motion for smooth, engaging transitions.
+Optimized Performance: Lazy-loading, image optimizations, and server-side rendering where needed.
+Scalability: Modular and clean code structure for future expansion.
