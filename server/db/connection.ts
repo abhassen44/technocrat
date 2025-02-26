@@ -1,15 +1,17 @@
 import mongoose from 'mongoose';
 import { seedDatabase } from './seed';
 
-const MONGODB_URI = 'mongodb://localhost:27017/lastminuteengineers';
+if (!process.env.MONGODB_URI) {
+  throw new Error('MONGODB_URI environment variable is not defined');
+}
 
 export async function connectDB() {
   try {
-    console.log('Attempting to connect to MongoDB...');
-    await mongoose.connect(MONGODB_URI, {
+    console.log('Attempting to connect to MongoDB Atlas...');
+    await mongoose.connect(process.env.MONGODB_URI, {
       serverSelectionTimeoutMS: 5000, // 5 seconds timeout
     });
-    console.log('Connected to MongoDB successfully');
+    console.log('Connected to MongoDB Atlas successfully');
 
     // Seed database in development mode
     if (process.env.NODE_ENV !== 'production') {
@@ -21,7 +23,7 @@ export async function connectDB() {
       }
     }
   } catch (error) {
-    console.error('MongoDB connection error:', error);
+    console.error('MongoDB Atlas connection error:', error);
     process.exit(1);
   }
 }
