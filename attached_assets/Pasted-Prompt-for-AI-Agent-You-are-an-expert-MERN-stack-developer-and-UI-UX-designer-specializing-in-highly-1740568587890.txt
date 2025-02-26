@@ -1,0 +1,105 @@
+Prompt for AI Agent
+You are an expert MERN stack developer and UI/UX designer specializing in highly interactive and animation-rich web experiences. Your task is to build Technocrats, a sleek, modern, and highly engaging website using the MERN stack (MongoDB, Express, React, Node.js) with a strong emphasis on GSAP-level animations, scroll-trigger effects, and fluid transitions.
+
+The website should have smooth, seamless animations similar to the GSAP website, ensuring a highly dynamic and immersive user experience. Every section should include interactive elements, scroll-triggered animations, and parallax effects for a futuristic, engaging feel.
+
+🌟 Core Features & Structure:
+1. Landing Page (Homepage) - First Impression Matters
+Hero Section:
+
+Large animated banner with a catchy headline, GSAP-powered text effects, and a parallax background.
+A call-to-action button (e.g., "Explore Tutorials", "Join Events") with a hover ripple effect.
+Smooth fade-in and scroll-triggered animations as users navigate.
+Quick Navigation Cards:
+
+Sections for Tutorials, Projects, Blogs, etc., with interactive hover effects.
+GSAP staggered reveals for seamless transitions.
+Featured Content Section:
+
+Showcase top tutorials, projects, and blogs with lazy-loaded animations.
+Hover-based 3D tilt effects for images and cards.
+2. Navigation Bar (Fluid & Sticky)
+Sticky Navbar:
+
+Always visible, dynamically shrinks on scroll with a smooth GSAP effect.
+Sections: Home | Blogs | Tutorials | Events | Projects | Merch | About Us.
+Dropdowns (Optional):
+
+Subcategories for Blogs, Tutorials, and Projects, sliding down with elastic animations.
+3. Tutorials Page (Dynamic Learning Hub)
+Search & Filters:
+
+Categorized into Beginner, Intermediate, and Advanced tutorials.
+Animated dropdown filter selections.
+List/Grid View Toggle:
+
+Click to switch views with smooth GSAP transitions.
+Animated Content Loading:
+
+Tutorials load with a fade-up effect and scroll-based animations.
+4. Blogs Page (Immersive Reading Experience)
+Latest & Popular Blogs Section:
+
+Cards with hover-based text reveals & scaling effects.
+Tags & Categories:
+
+Smooth sliding filters for selecting blog topics.
+Scroll-triggered Animations:
+
+Blog previews appear dynamically as users scroll, with parallax effects.
+5. Events Page (Interactive & Engaging)
+Upcoming Events Showcase:
+
+Events listed with countdown timers that animate on load.
+Dynamic Registration CTA:
+
+Call-to-action buttons pulsate on hover for better engagement.
+GSAP-powered Countdown Timer:
+
+Animated, visually engaging countdown for major events.
+6. Projects Page (Showcase & Community Involvement)
+Project Cards:
+
+Hover effects with flip transitions for details reveal.
+Community Submissions:
+
+Users can submit projects with an animated form that reveals fields dynamically.
+Interactive Hover Effects:
+
+GSAP-based smooth scaling & blur effects on project previews.
+7. Merch Page (Sleek & Interactive Shopping Experience)
+Product Listings:
+
+T-shirts, stickers, gadgets, etc., displayed with scroll-triggered animations.
+Interactive Cart System:
+
+GSAP animations for adding/removing items.
+Secure Checkout Flow:
+
+Animated progress steps for an intuitive purchasing experience.
+8. About Us Page (Storytelling with Motion)
+Team Introductions:
+
+Bios of team members with hover-triggered card flips.
+Mission & Vision Section:
+
+Story-driven design with text animations & parallax backgrounds.
+Contact Form:
+
+Input fields expand & animate on focus.
+9. Footer (Sleek & Functional)
+Quick Links:
+
+Navigation links with hover-based underlines.
+Social Media Icons:
+
+Animated hover effects that scale & change color.
+Newsletter Signup:
+
+Smooth input field animations with subtle fade-in effects.
+⚡ Animations & Interactions (GSAP-Powered)
+GSAP Scroll-Triggered Effects: Sections smoothly animate into view as the user scrolls.
+Page Transitions: GSAP-based route animations for seamless navigation.
+Lazy Loading: Images and components load dynamically for faster performance.
+Parallax Effects: Backgrounds shift dynamically for depth and immersion.
+Hover & Click Effects: Interactive UI elements using Framer Motion & GSAP.
