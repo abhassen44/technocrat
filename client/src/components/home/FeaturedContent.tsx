@@ -17,7 +17,7 @@ const cardVariants = {
     transition: {
       delay: i * 0.1,
       duration: 0.8,
-      ease: [0.215, 0.61, 0.355, 1], // Cubic bezier for smooth easing
+      ease: [0.215, 0.61, 0.355, 1],
     },
   }),
   hover: {
@@ -31,7 +31,7 @@ const cardVariants = {
 };
 
 export function FeaturedContent() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
   const tutorialsRef = useRef<HTMLDivElement>(null);
   const blogsRef = useRef<HTMLDivElement>(null);
 
@@ -44,12 +44,15 @@ export function FeaturedContent() {
   });
 
   useEffect(() => {
-    // Initialize GSAP animations
-    const sections = gsap.utils.toArray([tutorialsRef.current, blogsRef.current]);
+    if (!containerRef.current || !tutorialsRef.current || !blogsRef.current) return;
 
-    sections.forEach((section, i) => {
+    const sections = [tutorialsRef.current, blogsRef.current];
+
+    sections.forEach((section) => {
+      const heading = section.querySelector('h2');
+      if (!heading) return;
+
       // Heading animation
-      const heading = section?.querySelector('h2');
       gsap.from(heading, {
         scrollTrigger: {
           trigger: heading,
@@ -63,40 +66,18 @@ export function FeaturedContent() {
         ease: "power3.out",
       });
 
-      // Pin section
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top center",
-        end: "bottom center",
-        toggleClass: "active",
-        onEnter: () => {
-          gsap.to(section, {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-          });
+      // Section animation
+      gsap.from(section, {
+        scrollTrigger: {
+          trigger: section,
+          start: "top 80%",
+          end: "center center",
+          toggleActions: "play none none reverse",
         },
-        onLeave: () => {
-          gsap.to(section, {
-            opacity: 0.7,
-            y: 50,
-            duration: 0.5,
-          });
-        },
-        onEnterBack: () => {
-          gsap.to(section, {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-          });
-        },
-        onLeaveBack: () => {
-          gsap.to(section, {
-            opacity: 0.7,
-            y: -50,
-            duration: 0.5,
-          });
-        },
+        opacity: 0,
+        y: 100,
+        duration: 1,
+        ease: "power3.out",
       });
     });
 
