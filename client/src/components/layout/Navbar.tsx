@@ -11,20 +11,22 @@ import { cn } from "@/lib/utils";
 
 export function Navbar() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-6">
+      <div className="container flex h-14 items-center justify-between">
+        <div className="mr-16 font-bold text-2xl">
+          <Link href="/">
+            <span>Technocrats</span>
+          </Link>
+        </div>
         <NavigationMenu>
-          <NavigationMenuList>
+          <NavigationMenuList className="flex gap-10 text-xl">
             <NavigationMenuItem>
-              <Link href="/">
-                <NavigationMenuLink className="font-bold">
-                  LastMinuteEngineers
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Learn</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="text-xl">
+                <span >
+                Learn
+                </span>
+                
+                </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-2">
                   <li className="row-span-3">
@@ -50,33 +52,25 @@ export function Navbar() {
 
             <NavigationMenuItem>
               <Link href="/events">
-                <NavigationMenuLink className={cn("block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground")}>
-                  Events
-                </NavigationMenuLink>
+                <NavigationMenuLink className={cn("block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground")}>Events</NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
 
             <NavigationMenuItem>
               <Link href="/projects">
-                <NavigationMenuLink className={cn("block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground")}>
-                  Projects
-                </NavigationMenuLink>
+                <NavigationMenuLink className={cn("block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground")}>Projects</NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
 
             <NavigationMenuItem>
               <Link href="/merch">
-                <NavigationMenuLink className={cn("block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground")}>
-                  Merch
-                </NavigationMenuLink>
+                <NavigationMenuLink className={cn("block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground")}>Merch</NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
 
             <NavigationMenuItem>
               <Link href="/about">
-                <NavigationMenuLink className={cn("block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground")}>
-                  About
-                </NavigationMenuLink>
+                <NavigationMenuLink className={cn("block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground")}>About</NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
