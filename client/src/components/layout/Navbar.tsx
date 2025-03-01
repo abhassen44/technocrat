@@ -67,11 +67,16 @@ export function Navbar() {
           className="font-bold text-2xl flex items-center gap-2"
         >
           <Link href="/">
-            <div className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground">T</span>
+            <div className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+              <div className="w-32 h-14 bg-primary rounded-lg flex items-center justify-center overflow-hidden">
+                <img 
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+                  src="/techno.jpg" 
+                  alt="Technocrats Logo" 
+                  className="text-primary-foreground" 
+                />
               </div>
-              <span className="hidden sm:inline">Technocrats</span>
+              <span className="hidden sm:inline text-2xl font-bold">Technocrats</span>
             </div>
           </Link>
         </motion.div>

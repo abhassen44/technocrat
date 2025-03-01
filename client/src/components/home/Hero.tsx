@@ -110,14 +110,14 @@ export function Hero() {
             className="text-5xl sm:text-7xl font-bold tracking-tight bg-clip-text bg-gradient-to-r from-primary to-primary/50 [perspective:1000px]"
           >
             Learn Electronics Engineering Made Simple
+      
           </h1>
 
           <p
             ref={subTextRef}
             className="mt-8 text-xl leading-8 text-muted-foreground"
           >
-            Discover practical electronics tutorials, projects, and resources
-            designed to help you learn and build amazing things.
+           Technocrats is the Electronics Club of IIIT Guwahati, where passionate students come together to learn and build amazing things.
           </p>
 
           <div 

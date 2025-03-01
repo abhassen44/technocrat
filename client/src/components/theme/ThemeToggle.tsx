@@ -15,7 +15,7 @@ export function ThemeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative overflow-hidden">
+        <Button variant="ghost" size="icon" className="relative w-9 h-9 flex items-center justify-center">
           {/* Sun icon with animation */}
           <AnimatePresence mode="wait">
             {!isLoading ? (
@@ -26,9 +26,10 @@ export function ThemeToggle() {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.15 }}
                   key="icons"
+                  className="absolute inset-0 flex items-center justify-center"
                 >
-                  <Sun className="h-5 w-5 rotate-0 scale-100 transition-transform duration-500 dark:-rotate-90 dark:scale-0" />
-                  <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-transform duration-500 dark:rotate-0 dark:scale-100" />
+                  <Sun className="h-[18px] w-[18px] absolute rotate-0 scale-100 transition-transform duration-500 dark:-rotate-90 dark:scale-0" />
+                  <Moon className="h-[18px] w-[18px] absolute rotate-90 scale-0 transition-transform duration-500 dark:rotate-0 dark:scale-100" />
                 </motion.div>
               </>
             ) : (
@@ -36,7 +37,7 @@ export function ThemeToggle() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="h-5 w-5 flex items-center justify-center"
+                className="flex items-center justify-center"
                 key="loading"
               >
                 <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
