@@ -13,6 +13,12 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "../theme/ThemeToggle";
+import EventsLogo from "../ui/EventsLogo";
+import TutorialsLogo from "../ui/TutorialsLogo";
+import BlogsLogo from "../ui/BlogsLogo";
+import ProjectsLogo from "../ui/ProjectsLogo";
+import MerchLogo from "../ui/MerchLogo";
+import AboutLogo from "../ui/AboutLogo";
 
 const menuItems = [
   {
@@ -24,18 +30,36 @@ const menuItems = [
         description: "Step-by-step guides for electronics projects",
         href: "/tutorials",
         featured: true,
+        hasLogo: true
       },
       {
         title: "Blogs",
         description: "Latest insights and tech articles",
         href: "/blogs",
+        hasLogo: true
       },
     ],
   },
-  { title: "Events", href: "/events" },
-  { title: "Projects", href: "/projects" },
-  { title: "Merch", href: "/merch" },
-  { title: "About", href: "/about" },
+  { 
+    title: "Events", 
+    href: "/events",
+    hasLogo: true 
+  },
+  { 
+    title: "Projects", 
+    href: "/projects",
+    hasLogo: true 
+  },
+  { 
+    title: "Merch", 
+    href: "/merch",
+    hasLogo: true 
+  },
+  { 
+    title: "About", 
+    href: "/about",
+    hasLogo: true 
+  },
 ];
 
 export function Navbar() {
@@ -76,7 +100,7 @@ export function Navbar() {
                   className="text-primary-foreground" 
                 />
               </div>
-              <span className="hidden sm:inline text-2xl font-bold">Technocrats</span>
+              <span className="hidden sm:inline text-2xl font-bold text-foreground dark:text-white">Technocrats</span>
             </div>
           </Link>
         </motion.div>
@@ -84,12 +108,18 @@ export function Navbar() {
         {/* Desktop Navigation */}
         <div className="hidden md:flex md:items-center md:gap-4">
           <NavigationMenu>
-            <NavigationMenuList className="flex gap-1">
-              {menuItems.map((item) => (
-                <NavigationMenuItem key={item.title}>
-                  {item.type === "dropdown" ? (
-                    <>
-                      <NavigationMenuTrigger className="text-base h-9 px-4">
+            <NavigationMenuList className="hidden md:flex">
+              {menuItems.map((item) => {
+                if (item.type === "dropdown") {
+                  return (
+                    <NavigationMenuItem key={item.title}>
+                      <NavigationMenuTrigger
+                        className={cn(
+                          "text-lg font-medium",
+                          isScrolled ? "text-foreground" : "text-black",
+                          "dark:text-white hover:text-accent-foreground dark:hover:text-accent-foreground"
+                        )}
+                      >
                         {item.title}
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
@@ -101,14 +131,25 @@ export function Navbar() {
                                   <motion.a
                                     className={cn(
                                       "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
+                                      "text-foreground dark:text-white",
                                       "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                                     )}
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                   >
-                                    <div className="text-sm font-medium leading-none">{subItem.title}</div>
+                                    {subItem.hasLogo ? (
+                                      subItem.title === "Tutorials" ? (
+                                        <TutorialsLogo width={120} height={30} className="text-foreground dark:text-white" />
+                                      ) : subItem.title === "Blogs" ? (
+                                        <BlogsLogo width={100} height={30} className="text-foreground dark:text-white" />
+                                      ) : (
+                                        <div className="text-sm font-medium leading-none text-foreground dark:text-white">{subItem.title}</div>
+                                      )
+                                    ) : (
+                                      <div className="text-sm font-medium leading-none text-foreground dark:text-white">{subItem.title}</div>
+                                    )}
                                     {subItem.description && (
-                                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground mt-1">
+                                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground dark:text-muted-foreground mt-1">
                                         {subItem.description}
                                       </p>
                                     )}
@@ -119,25 +160,45 @@ export function Navbar() {
                           ))}
                         </ul>
                       </NavigationMenuContent>
-                    </>
-                  ) : (
-                    <Link href={item.href || ""}>
-                      <NavigationMenuLink asChild>
-                        <motion.a
-                          className={cn(
-                            "block select-none rounded-md px-4 py-2 leading-none no-underline outline-none transition-colors",
-                            "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                          )}
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          {item.title}
-                        </motion.a>
-                      </NavigationMenuLink>
-                    </Link>
-                  )}
-                </NavigationMenuItem>
-              ))}
+                    </NavigationMenuItem>
+                  );
+                } else {
+                  return (
+                    <NavigationMenuItem key={item.title}>
+                      <Link href={item.href || ""}>
+                        <NavigationMenuLink asChild>
+                          <motion.a
+                            className={cn(
+                              "block select-none rounded-md px-4 py-2 leading-none no-underline outline-none transition-colors text-lg font-medium",
+                              "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+                              isScrolled ? "text-foreground" : "text-black",
+                              "dark:text-white"
+                            )}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            {item.hasLogo ? (
+                              item.title === "Events" ? (
+                                <EventsLogo width={100} height={30} className="text-foreground dark:text-white" />
+                              ) : item.title === "Projects" ? (
+                                <ProjectsLogo width={100} height={30} className="text-foreground dark:text-white" />
+                              ) : item.title === "Merch" ? (
+                                <MerchLogo width={100} height={30} className="text-foreground dark:text-white" />
+                              ) : item.title === "About" ? (
+                                <AboutLogo width={100} height={30} className="text-foreground dark:text-white" />
+                              ) : (
+                                item.title
+                              )
+                            ) : (
+                              item.title
+                            )}
+                          </motion.a>
+                        </NavigationMenuLink>
+                      </Link>
+                    </NavigationMenuItem>
+                  );
+                }
+              })}
             </NavigationMenuList>
           </NavigationMenu>
           <ThemeToggle />
@@ -179,14 +240,27 @@ export function Navbar() {
             <div key={item.title}>
               {item.type === "dropdown" ? (
                 <div className="space-y-2">
-                  <div className="font-medium text-sm text-muted-foreground">{item.title}</div>
+                  <div className="font-medium text-sm text-foreground dark:text-white">{item.title}</div>
                   {item.items?.map((subItem) => (
                     <Link key={subItem.title} href={subItem.href || ""}>
                       <motion.a
-                        className="block px-2 py-1.5 text-sm rounded-md hover:bg-accent"
+                        className={cn(
+                          "block px-2 py-1.5 text-sm rounded-md hover:bg-accent",
+                          "text-foreground dark:text-white hover:text-accent-foreground dark:hover:text-accent-foreground"
+                        )}
                         whileTap={{ scale: 0.98 }}
                       >
-                        {subItem.title}
+                        {subItem.hasLogo ? (
+                          subItem.title === "Tutorials" ? (
+                            <TutorialsLogo width={100} height={30} className="text-foreground dark:text-white" />
+                          ) : subItem.title === "Blogs" ? (
+                            <BlogsLogo width={80} height={30} className="text-foreground dark:text-white" />
+                          ) : (
+                            subItem.title
+                          )
+                        ) : (
+                          subItem.title
+                        )}
                       </motion.a>
                     </Link>
                   ))}
@@ -194,10 +268,24 @@ export function Navbar() {
               ) : (
                 <Link href={item.href || ""}>
                   <motion.a
-                    className="block px-2 py-1.5 text-sm rounded-md hover:bg-accent"
+                    className="block px-2 py-1.5 text-base font-medium rounded-md hover:bg-accent text-foreground dark:text-white hover:text-accent-foreground dark:hover:text-accent-foreground"
                     whileTap={{ scale: 0.98 }}
                   >
-                    {item.title}
+                    {item.hasLogo ? (
+                      item.title === "Events" ? (
+                        <EventsLogo width={100} height={35} className="text-foreground dark:text-white" />
+                      ) : item.title === "Projects" ? (
+                        <ProjectsLogo width={115} height={35} className="text-foreground dark:text-white" />
+                      ) : item.title === "Merch" ? (
+                        <MerchLogo width={100} height={35} className="text-foreground dark:text-white" />
+                      ) : item.title === "About" ? (
+                        <AboutLogo width={100} height={35} className="text-foreground dark:text-white" />
+                      ) : (
+                        item.title
+                      )
+                    ) : (
+                      item.title
+                    )}
                   </motion.a>
                 </Link>
               )}

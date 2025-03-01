@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { RobotCursor } from "@/components/ui/RobotCursor";
+import { ParticleBackground } from "@/components/home/ParticleBackground";
 import Home from "@/pages/Home";
 import Tutorials from "@/pages/Tutorials";
 import Blogs from "@/pages/Blogs";
@@ -19,6 +20,7 @@ const queryClient = new QueryClient();
 function Router() {
   return (
     <>
+      <ParticleBackground />
       <RobotCursor />
       <Navbar />
       <div className="flex-1">
