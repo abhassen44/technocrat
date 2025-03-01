@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import { ThemeToggle } from "../theme/ThemeToggle";
 
 const menuItems = [
   {
@@ -76,10 +77,10 @@ export function Navbar() {
         </motion.div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:block">
+        <div className="hidden md:flex md:items-center md:gap-4">
           <NavigationMenu>
             <NavigationMenuList className="flex gap-1">
-              {menuItems.map((item, index) => (
+              {menuItems.map((item) => (
                 <NavigationMenuItem key={item.title}>
                   {item.type === "dropdown" ? (
                     <>
@@ -90,7 +91,7 @@ export function Navbar() {
                         <ul className="grid gap-3 p-6 w-[400px]">
                           {item.items?.map((subItem) => (
                             <li key={subItem.title} className={cn(subItem.featured && "row-span-2")}>
-                              <Link href={subItem.href}>
+                              <Link href={subItem.href || ""}>
                                 <NavigationMenuLink asChild>
                                   <motion.a
                                     className={cn(
@@ -115,7 +116,7 @@ export function Navbar() {
                       </NavigationMenuContent>
                     </>
                   ) : (
-                    <Link href={item.href}>
+                    <Link href={item.href || ""}>
                       <NavigationMenuLink asChild>
                         <motion.a
                           className={cn(
@@ -134,10 +135,12 @@ export function Navbar() {
               ))}
             </NavigationMenuList>
           </NavigationMenu>
+          <ThemeToggle />
         </div>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden">
+        {/* Mobile Menu Button and Theme Toggle */}
+        <div className="md:hidden flex items-center gap-2">
+          <ThemeToggle />
           <Button
             variant="ghost"
             size="icon"
@@ -173,7 +176,7 @@ export function Navbar() {
                 <div className="space-y-2">
                   <div className="font-medium text-sm text-muted-foreground">{item.title}</div>
                   {item.items?.map((subItem) => (
-                    <Link key={subItem.title} href={subItem.href}>
+                    <Link key={subItem.title} href={subItem.href || ""}>
                       <motion.a
                         className="block px-2 py-1.5 text-sm rounded-md hover:bg-accent"
                         whileTap={{ scale: 0.98 }}
@@ -184,7 +187,7 @@ export function Navbar() {
                   ))}
                 </div>
               ) : (
-                <Link href={item.href}>
+                <Link href={item.href || ""}>
                   <motion.a
                     className="block px-2 py-1.5 text-sm rounded-md hover:bg-accent"
                     whileTap={{ scale: 0.98 }}
