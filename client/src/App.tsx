@@ -13,13 +13,14 @@ import About from "@/pages/About";
 import Merch from "@/pages/Merch";
 import NotFound from "@/pages/not-found";
 import { ThemeProvider } from "./components/theme/ThemeProvider";
-
+import { RobotCursor } from "@/components/home/RobotCursor";
 const queryClient = new QueryClient();
 
 function Router() {
   return (
     <>
       <ParticleBackground />
+      <RobotCursor />
       <Navbar />
       <div className="flex-1">
         <Switch>
