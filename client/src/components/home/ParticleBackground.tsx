@@ -43,14 +43,14 @@ export function ParticleBackground() {
 
       for (let i = 0; i < numberOfParticles; i++) {
         particles.current.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          targetX: Math.random() * canvas.width,
-          targetY: Math.random() * canvas.height,
+          x: mousePosition.current.x,
+          y: mousePosition.current.y,
+          targetX: mousePosition.current.x,
+          targetY: mousePosition.current.y,
           dx: 0,
           dy: 0,
-          size: Math.random() * 4 + 2,
-          color: colors[Math.floor(Math.random() * colors.length)],
+          size: Math.random() * 2 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)]
         });
       }
     };
@@ -134,4 +134,4 @@ export function ParticleBackground() {
       }}
     />
   );
-} 
+}
