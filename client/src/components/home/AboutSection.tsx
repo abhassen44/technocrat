@@ -23,7 +23,7 @@ export function AboutSection() {
     offset: ["start end", "end start"]
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [1, 1, 1, 1]);
   const scale = useTransform(scrollYProgress, [0, 0.2], [0.8, 1]);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export function AboutSection() {
             <img
               src={image}
               alt={`Background ${index + 1}`}
-              className="h-full w-full object-cover opacity-20"
+              className="h-full w-full object-cover"
             />
           </motion.div>
         ))}
