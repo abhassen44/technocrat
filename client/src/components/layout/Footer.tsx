@@ -4,9 +4,9 @@ export function Footer() {
   return (
     <footer className="border-t">
       <div className="container py-8 md:py-12">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-4 px-10">
           <div>
-            <h3 className="text-lg font-semibold">Quick Links</h3>
+            <h3 className="text-xl font-semibold">Quick Links</h3>
             <ul className="mt-4 space-y-2">
               <li>
                 <Link href="/tutorials">
@@ -33,7 +33,7 @@ export function Footer() {
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold">Community</h3>
+            <h3 className="text-xl font-semibold">Community</h3>
             <ul className="mt-4 space-y-2">
               <li>
                 <Link href="/projects">
@@ -53,7 +53,7 @@ export function Footer() {
           </div>
 
           <div className="col-span-2 md:col-span-2">
-            <h3 className="text-lg font-semibold">Subscribe to our newsletter</h3>
+            <h3 className="text-xl font-semibold">Subscribe to our community</h3>
             <p className="mt-2 text-sm text-muted-foreground">
               Get the latest updates and tutorials directly in your inbox.
             </p>
@@ -75,7 +75,7 @@ export function Footer() {
         
         <div className="mt-8 border-t pt-8 text-center">
           <p className="text-sm text-muted-foreground">
-            © 2024 LastMinuteEngineers. All rights reserved.
+            © 2025 Technocrats. All rights reserved.
           </p>
         </div>
       </div>

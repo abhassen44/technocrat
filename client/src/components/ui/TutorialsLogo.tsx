@@ -56,7 +56,7 @@ const TutorialsLogo: React.FC<TutorialsLogoProps> = ({
         <path d="M15,27 L15,28 L10,28 L10,30" id="trace-6" stroke="#FF7E00" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"></path>
         
         {/* Text "TUTORIALS" */}
-        <text id="tutorials-text" fontFamily="Roboto Mono, monospace" fontSize="18" fontWeight="600" fill="#333333" x="45" y="25">
+        <text id="tutorials-text" fontFamily="Roboto Mono, monospace" fontSize="18" fontWeight="600" fill="currentColor" x="45" y="25">
             TUTORIALS
         </text>
       </g>

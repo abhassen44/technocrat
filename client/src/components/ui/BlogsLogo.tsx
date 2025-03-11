@@ -46,7 +46,7 @@ const BlogsLogo: React.FC<BlogsLogoProps> = ({
         <circle id="pulse-3" fill="#3eb370" cx="28" cy="17" r="1.5"></circle>
         
         {/* Text "BLOGS" */}
-        <text id="blogs-text" fontFamily="Source Sans Pro, sans-serif" fontSize="20" fontWeight="600" fill="#333333" x="45" y="25">
+        <text id="blogs-text" fontFamily="Source Sans Pro, sans-serif" fontSize="20" fontWeight="600" fill="currentColor" x="45" y="25">
             BLOGS
         </text>
       </g>

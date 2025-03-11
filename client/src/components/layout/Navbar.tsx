@@ -92,7 +92,7 @@ export function Navbar() {
         >
           <Link href="/">
             <div className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <div className="w-32 h-14 bg-primary rounded-lg flex items-center justify-center overflow-hidden">
+              <div className="w-40 h-14 bg-primary rounded-3xl flex items-center justify-center overflow-hidden">
                 <img 
                   style={{ width: "100%", height: "100%", objectFit: "cover" }} 
                   src="/techno.jpg" 
@@ -100,7 +100,7 @@ export function Navbar() {
                   className="text-primary-foreground" 
                 />
               </div>
-              <span className="hidden sm:inline text-2xl font-bold text-foreground dark:text-white">Technocrats</span>
+              {/* <span className="hidden sm:inline text-2xl font-bold text-foreground dark:text-white">Technocrats</span> */}
             </div>
           </Link>
         </motion.div>
@@ -252,11 +252,11 @@ export function Navbar() {
                       >
                         {subItem.hasLogo ? (
                           subItem.title === "Tutorials" ? (
-                            <TutorialsLogo width={100} height={30} className="text-foreground dark:text-white" />
+                            <TutorialsLogo width={100} height={30} className="text-background dark:text-white " />
                           ) : subItem.title === "Blogs" ? (
-                            <BlogsLogo width={80} height={30} className="text-foreground dark:text-white" />
+                            <BlogsLogo width={80} height={30} className="text-background dark:text-white " />
                           ) : (
-                            subItem.title
+                            <span className="text-background dark:text-white ">{subItem.title}</span>
                           )
                         ) : (
                           subItem.title
