@@ -38,7 +38,7 @@ export default function About() {
       name: "Abhas sen",
       role: "lead developer and designer",
       bio: "passionate about creating user-friendly and efficient web applications.",
-      image: "/api/placeholder/400/400",
+      image: "/client/src/assets/abhas.png",
       expertise: ["web development", "ui/ux design", "react"],
       icon: <Cpu className="w-8 h-8" />,
       color: "from-blue-600 to-cyan-500",
