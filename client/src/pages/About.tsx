@@ -50,7 +50,7 @@ export default function About() {
     },
     {
       id: 2,
-      name: "Samantha Chen",
+      name: "girish",
       role: "Content Director",
       bio: "Technical writer and educator specializing in making complex electronics concepts accessible to beginners.",
       image: "/api/placeholder/400/400",

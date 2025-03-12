@@ -109,7 +109,7 @@ export function Hero() {
             ref={headingRef}
             className="text-5xl sm:text-7xl font-bold tracking-tight bg-clip-text bg-gradient-to-r from-primary to-primary/50 [perspective:1000px]"
           >
-            Learn Electronics Engineering Made Simple
+            Learning Electronics  Engineering  Made  Simple
       
           </h1>
 
