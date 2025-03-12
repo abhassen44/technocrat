@@ -1,7 +1,6 @@
 import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ParticleBackground } from "./ParticleBackground";
-import { RobotCursor } from "./RobotCursor";
 import { FeaturedTutorials } from "./FeaturedTutorials";
 import { LatestBlogPosts } from "./LatestBlogPosts";
 
@@ -29,9 +28,6 @@ export function FeaturedContent() {
       {/* Background elements */}
       <div className="absolute inset-0 z-0">
         <ParticleBackground />
-      </div>
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <RobotCursor />
       </div>
       
       {/* Content */}

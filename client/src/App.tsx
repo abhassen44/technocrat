@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { RobotCursor } from "@/components/ui/RobotCursor";
+import { ParticleBackground } from "@/components/home/ParticleBackground";
 import Home from "@/pages/Home";
 import Tutorials from "@/pages/Tutorials";
 import Blogs from "@/pages/Blogs";
@@ -13,12 +13,13 @@ import About from "@/pages/About";
 import Merch from "@/pages/Merch";
 import NotFound from "@/pages/not-found";
 import { ThemeProvider } from "./components/theme/ThemeProvider";
-
+import { RobotCursor } from "@/components/home/RobotCursor";
 const queryClient = new QueryClient();
 
 function Router() {
   return (
     <>
+      <ParticleBackground />
       <RobotCursor />
       <Navbar />
       <div className="flex-1">
@@ -40,13 +41,11 @@ function Router() {
 
 export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="system" storageKey="app-theme">
-        <div className="min-h-screen flex flex-col bg-background text-foreground">
-          <Router />
-        </div>
-      </ThemeProvider>
-      <Toaster />
-    </QueryClientProvider>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <Router />
+        <Toaster />
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
