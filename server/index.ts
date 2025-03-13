@@ -4,10 +4,12 @@ import { setupVite, serveStatic, log } from "./vite";
 import { connectDB } from "./db/connection";
 import { setupAuth } from "./auth";
 
+// Create Express app
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Add logging middleware
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
@@ -38,10 +40,19 @@ app.use((req, res, next) => {
   next();
 });
 
-// Setup middleware and prepare routes
-const setupServer = async () => {
-  // Connect to MongoDB
-  await connectDB();
+// Track connection status to avoid reconnecting on each request
+let isDbConnected = false;
+let isSetup = false;
+
+// Setup the application
+async function setupApp() {
+  if (isSetup) return;
+  
+  // Connect to MongoDB if not already connected
+  if (!isDbConnected) {
+    await connectDB();
+    isDbConnected = true;
+  }
 
   // Setup authentication
   setupAuth(app);
@@ -53,8 +64,8 @@ const setupServer = async () => {
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
-
     res.status(status).json({ message });
+    // Don't throw error in serverless environment
   });
 
   // Development vs Production setup
@@ -63,26 +74,31 @@ const setupServer = async () => {
   } else {
     serveStatic(app);
   }
-
+  
+  isSetup = true;
+  
+  // For local development only - not used in Vercel
+  if (process.env.NODE_ENV !== 'production') {
+    const port = process.env.PORT || 5000;
+    server.listen({
+      port,
+      host: "0.0.0.0",
+      reusePort: true,
+    }, () => {
+      log(`serving on port ${port}`);
+    });
+  }
+  
   return app;
-};
+}
 
 // For local development
 if (process.env.NODE_ENV !== 'production') {
-  const PORT = process.env.PORT || 3000;
-  setupServer().then(app => {
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  });
+  setupApp();
 }
 
-// For serverless deployment
-let cachedApp: express.Express | null = null;
-
+// Handler for Vercel serverless
 export default async function handler(req: Request, res: Response) {
-  if (!cachedApp) {
-    cachedApp = await setupServer();
-  }
-  return cachedApp(req, res);
+  await setupApp();
+  return app(req, res);
 }
