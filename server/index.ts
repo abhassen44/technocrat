@@ -38,35 +38,51 @@ app.use((req, res, next) => {
   next();
 });
 
-(async () => {
-  // Connect to MongoDB before starting the server
+// Setup middleware and prepare routes
+const setupServer = async () => {
+  // Connect to MongoDB
   await connectDB();
 
   // Setup authentication
   setupAuth(app);
 
+  // Register routes
   const server = await registerRoutes(app);
 
+  // Error handling middleware
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
 
     res.status(status).json({ message });
-    throw err;
   });
 
+  // Development vs Production setup
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
     serveStatic(app);
   }
 
-  const port = 5000;
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
+  return app;
+};
+
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3000;
+  setupServer().then(app => {
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
   });
-})();
+}
+
+// For serverless deployment
+let cachedApp: express.Express | null = null;
+
+export default async function handler(req: Request, res: Response) {
+  if (!cachedApp) {
+    cachedApp = await setupServer();
+  }
+  return cachedApp(req, res);
+}
