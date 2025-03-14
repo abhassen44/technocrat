@@ -1,5 +1,5 @@
 import express, { type Request, Response, NextFunction } from "express";
-import { registerRoutes } from "../server/routes";
+import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { connectDB } from "./db/connection";
 import { setupAuth } from "./auth";
@@ -65,37 +65,28 @@ async function setupApp() {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
     res.status(status).json({ message });
-    // Don't throw error in serverless environment
   });
 
-  // Development vs Production setup
-  if (app.get("env") === "development") {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app);
-  }
+  // Development setup
+  await setupVite(app, server);
   
   isSetup = true;
   
   // For local development only - not used in Vercel
-  if (process.env.NODE_ENV !== 'production') {
-    const port = process.env.PORT || 5000;
-    server.listen({
-      port,
-      host: "0.0.0.0",
-      reusePort: true,
-    }, () => {
-      log(`serving on port ${port}`);
-    });
-  }
+  const port = process.env.PORT || 5000;
+  server.listen({
+    port,
+    host: "0.0.0.0",
+    reusePort: true,
+  }, () => {
+    log(`serving on port ${port}`);
+  });
   
   return app;
 }
 
 // For local development
-if (process.env.NODE_ENV !== 'production') {
-  setupApp();
-}
+setupApp();
 
 // Handler for Vercel serverless
 export default async function handler(req: Request, res: Response) {
