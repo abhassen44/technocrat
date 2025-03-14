@@ -10,7 +10,7 @@ const __dirname = dirname(__filename);
 
 // Load environment variables
 const apiUrl = process.env.NODE_ENV === 'production'
-  ? process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://your-api-domain.vercel.app'
+  ? process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.API_URL || 'https://your-api-domain.vercel.app'
   : 'http://localhost:5000';
 
 export default defineConfig({
@@ -47,6 +47,7 @@ export default defineConfig({
     outDir: path.resolve(__dirname, "dist/public"),
     emptyOutDir: true,
     sourcemap: true,
+    minify: 'terser',
     rollupOptions: {
       output: {
         manualChunks: {
@@ -55,13 +56,18 @@ export default defineConfig({
             '@radix-ui/react-accordion',
             '@radix-ui/react-dialog',
             '@radix-ui/react-dropdown-menu',
-            // Add other UI libraries here
+            '@radix-ui/react-label',
+            '@radix-ui/react-select',
+            '@radix-ui/react-toast',
+            '@radix-ui/react-tooltip',
           ],
+          three: ['three', '@react-three/fiber', '@react-three/drei'],
         },
       },
     },
   },
   define: {
     'process.env.API_URL': JSON.stringify(apiUrl),
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
   },
 });
