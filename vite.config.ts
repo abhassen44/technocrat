@@ -8,6 +8,11 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// Load environment variables
+const apiUrl = process.env.NODE_ENV === 'production'
+  ? process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://your-api-domain.vercel.app'
+  : 'http://localhost:5000';
+
 export default defineConfig({
   plugins: [
     react(),
@@ -32,9 +37,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: process.env.NODE_ENV === 'production' 
-          ? 'https://your-api-domain.vercel.app' // Replace with your actual API domain in production
-          : 'http://localhost:5000',
+        target: apiUrl,
         changeOrigin: true,
         secure: false,
       },
@@ -44,5 +47,21 @@ export default defineConfig({
     outDir: path.resolve(__dirname, "dist/public"),
     emptyOutDir: true,
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          ui: [
+            '@radix-ui/react-accordion',
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            // Add other UI libraries here
+          ],
+        },
+      },
+    },
+  },
+  define: {
+    'process.env.API_URL': JSON.stringify(apiUrl),
   },
 });
