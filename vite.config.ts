@@ -42,6 +42,7 @@ export default defineConfig({
         secure: false,
       },
     },
+    allowedHosts: true,
   },
   build: {
     outDir: path.resolve(__dirname, "dist/public"),
