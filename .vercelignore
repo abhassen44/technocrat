@@ -4,7 +4,6 @@ node_modules
 .env.local
 .env.development
 README.md
-.gitignore
-.replit
+
 attached_assets
 generated-icon.png 
