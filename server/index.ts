@@ -3,11 +3,22 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { connectDB } from "./db/connection";
 import { setupAuth } from "./auth";
+import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 
 // Create Express app
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Add CORS support
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production' 
+    ? process.env.CLIENT_URL || true
+    : ['http://localhost:3000', 'http://localhost:5173'],
+  credentials: true
+}));
 
 // Add logging middleware
 app.use((req, res, next) => {
@@ -50,8 +61,13 @@ async function setupApp() {
   
   // Connect to MongoDB if not already connected
   if (!isDbConnected) {
-    await connectDB();
-    isDbConnected = true;
+    try {
+      await connectDB();
+      isDbConnected = true;
+      console.log('MongoDB connected successfully');
+    } catch (error) {
+      console.error('MongoDB connection error:', error);
+    }
   }
 
   // Setup authentication
@@ -60,27 +76,62 @@ async function setupApp() {
   // Register routes
   const server = await registerRoutes(app);
 
+  // API routes should be registered before the error handler
+  // Add a test route to verify API is working
+  app.get('/api/status', (req, res) => {
+    res.json({ 
+      status: 'ok', 
+      environment: process.env.NODE_ENV,
+      dbConnected: isDbConnected
+    });
+  });
+
   // Error handling middleware
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    console.error('Server error:', err);
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
     res.status(status).json({ message });
   });
 
-  // Development setup
-  await setupVite(app, server);
+  // Development setup - only in development mode
+  if (process.env.NODE_ENV !== 'production') {
+    await setupVite(app, server);
+  } else {
+    // In production, serve static files from the dist directory
+    try {
+      const __dirname = path.dirname(fileURLToPath(import.meta.url));
+      const distPath = path.resolve(__dirname, '../../dist/public');
+      console.log('Serving static files from:', distPath);
+      
+      app.use(express.static(distPath));
+      
+      // For client-side routing, send index.html for all non-API routes
+      app.get('*', (req, res, next) => {
+        if (!req.path.startsWith('/api')) {
+          res.sendFile(path.join(distPath, 'index.html'));
+        } else {
+          next();
+        }
+      });
+    } catch (error) {
+      console.error('Error setting up static file serving:', error);
+    }
+  }
   
   isSetup = true;
   
   // For local development only - not used in Vercel
-  const port = process.env.PORT || 5000;
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
-  });
+  if (process.env.NODE_ENV !== 'production') {
+    const port = process.env.PORT || 5000;
+    server.listen({
+      port,
+      host: "0.0.0.0",
+      reusePort: true,
+    }, () => {
+      log(`serving on port ${port}`);
+    });
+  }
   
   return app;
 }
@@ -90,6 +141,11 @@ setupApp();
 
 // Handler for Vercel serverless
 export default async function handler(req: Request, res: Response) {
-  await setupApp();
-  return app(req, res);
+  try {
+    await setupApp();
+    return app(req, res);
+  } catch (error) {
+    console.error('Serverless handler error:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 }
