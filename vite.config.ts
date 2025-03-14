@@ -29,8 +29,20 @@ export default defineConfig({
     },
   },
   root: path.resolve(__dirname, "client"),
+  server: {
+    proxy: {
+      '/api': {
+        target: process.env.NODE_ENV === 'production' 
+          ? 'https://your-api-domain.vercel.app' // Replace with your actual API domain in production
+          : 'http://localhost:5000',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
   build: {
     outDir: path.resolve(__dirname, "dist/public"),
     emptyOutDir: true,
+    sourcemap: true,
   },
 });

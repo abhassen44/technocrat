@@ -1,5 +1,14 @@
-import mongoose from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import bcrypt from 'bcryptjs';
+
+// Define the User interface
+export interface IUser extends Document {
+  username: string;
+  email: string;
+  password: string;
+  createdAt: Date;
+  comparePassword: (candidatePassword: string) => Promise<boolean>;
+}
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
@@ -50,7 +59,7 @@ const projectSchema = new mongoose.Schema({
   category: { type: String, required: true }
 });
 
-export const User = mongoose.model('User', userSchema);
+export const User = mongoose.model<IUser>('User', userSchema);
 export const Tutorial = mongoose.model('Tutorial', tutorialSchema);
 export const Blog = mongoose.model('Blog', blogSchema);
 export const Event = mongoose.model('Event', eventSchema);

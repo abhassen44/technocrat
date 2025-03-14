@@ -3,13 +3,13 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import { Express } from 'express';
-import { User } from './db/models';
+import { User, IUser } from './db/models';
 
 export function setupAuth(app: Express) {
   // Session configuration
   app.use(
     session({
-      secret: 'your-secret-key', // TODO: Move to environment variable
+      secret: process.env.SESSION_SECRET || 'your-secret-key', // TODO: Move to environment variable
       resave: false,
       saveUninitialized: false,
       store: MongoStore.create({
@@ -18,7 +18,8 @@ export function setupAuth(app: Express) {
       }),
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
-        secure: process.env.NODE_ENV === 'production'
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
       }
     })
   );
@@ -50,7 +51,7 @@ export function setupAuth(app: Express) {
 
   // Serialize user for the session
   passport.serializeUser((user: any, done) => {
-    done(null, user.id);
+    done(null, (user as IUser).id);
   });
 
   // Deserialize user from the session
@@ -96,7 +97,7 @@ export function setupAuth(app: Express) {
   });
 
   app.post('/api/login', (req, res, next) => {
-    passport.authenticate('local', (err : any, user : any, info : any) => {
+    passport.authenticate('local', (err : any, user : IUser | false, info : any) => {
       if (err) {
         return res.status(500).json({ message: 'Error logging in' });
       }
@@ -123,7 +124,7 @@ export function setupAuth(app: Express) {
     if (!req.user) {
       return res.status(401).json({ message: 'Not authenticated' });
     }
-    const user: any = req.user;
+    const user = req.user as IUser;
     res.json({ user: { id: user.id, username: user.username, email: user.email } });
   });
 }

@@ -61,6 +61,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json(projects);
   });
 
+  // Add a simple test route
+  app.get('/api/test', (req, res) => {
+    res.json({ message: 'API is working correctly!' });
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
