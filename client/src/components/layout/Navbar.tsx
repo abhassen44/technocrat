@@ -95,7 +95,7 @@ export function Navbar() {
               <div className="w-40 h-14 bg-primary rounded-3xl flex items-center justify-center overflow-hidden">
                 <img 
                   style={{ width: "100%", height: "100%", objectFit: "cover" }} 
-                  src="/techno.svg" 
+                  src="/assets/images/techno.jpg"
                   alt="Technocrats Logo" 
                   className="text-primary-foreground" 
                 />
