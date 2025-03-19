@@ -2,16 +2,16 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 
 const images = [
-  "/src/assets/images/WhatsApp Image 2025-03-03 at 11.27.13 AM.jpg",
-  "/src/assets/images/WhatsApp Image 2025-03-03 at 11.27.12 AM.jpg",
-  "/src/assets/images/WhatsApp Image 2025-03-03 at 11.27.11 AM (1).jpg",
-  "/src/assets/images/WhatsApp Image 2025-03-03 at 11.27.11 AM.jpg",
-  "/src/assets/images/WhatsApp Image 2025-03-03 at 11.27.10 AM.jpg",
-  "/src/assets/images/WhatsApp Image 2025-03-03 at 11.27.09 AM.jpg",
-  "/src/assets/images/WhatsApp Image 2025-03-03 at 11.27.07 AM.jpg",
-  "/src/assets/images/WhatsApp Image 2025-03-03 at 11.27.06 AM.jpg",
-  "/src/assets/images/WhatsApp Image 2025-03-03 at 11.27.05 AM (1).jpg",
-  "/src/assets/images/WhatsApp Image 2025-03-03 at 11.27.05 AM.jpg",
+  "/assets/images/WhatsApp Image 2025-03-03 at 11.27.13 AM.jpg",
+  "/assets/images/WhatsApp Image 2025-03-03 at 11.27.12 AM.jpg",
+  "/assets/images/WhatsApp Image 2025-03-03 at 11.27.11 AM (1).jpg",
+  "/assets/images/WhatsApp Image 2025-03-03 at 11.27.11 AM.jpg",
+  "/assets/images/WhatsApp Image 2025-03-03 at 11.27.10 AM.jpg",
+  "/assets/images/WhatsApp Image 2025-03-03 at 11.27.09 AM.jpg",
+  "/assets/images/WhatsApp Image 2025-03-03 at 11.27.07 AM.jpg",
+  "/assets/images/WhatsApp Image 2025-03-03 at 11.27.06 AM.jpg",
+  "/assets/images/WhatsApp Image 2025-03-03 at 11.27.05 AM (1).jpg",
+  "/assets/images/WhatsApp Image 2025-03-03 at 11.27.05 AM.jpg",
 ];
 
 export function AboutSection() {
