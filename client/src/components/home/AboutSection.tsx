@@ -39,7 +39,7 @@ export function AboutSection() {
       {/* Background Images */}
       <motion.div 
         className="absolute inset-0 z-0"
-        style={{ opacity }}
+        style={{ opacity: 1 }} // Set opacity of pictures to 1
       >
         {images.map((image, index) => (
           <motion.div
@@ -66,7 +66,7 @@ export function AboutSection() {
 
       {/* Content */}
       <motion.div 
-        className="relative z-10 flex min-h-screen items-center justify-center px-4 py-16"
+        className="relative z-20 flex min-h-screen items-center justify-center px-4 py-16" 
         style={{ opacity, scale }}
       >
         <div className="max-w-4xl text-center">
@@ -84,12 +84,10 @@ export function AboutSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-8 text-lg text-muted-foreground md:text-xl"
+            className="mb-8 text-lg md:text-xl text-foreground"
           >
-            We are a dynamic team of tech enthusiasts, innovators, and problem solvers.
-            Our passion lies in creating cutting-edge solutions that transform ideas into reality.
-            With expertise spanning across various domains of technology, we strive to push
-            the boundaries of what's possible.
+          We are a society at IIIT Guwahati with incredibly passionate and talented people who understand
+          the subtle difference between daydreaming and dreaming big.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}

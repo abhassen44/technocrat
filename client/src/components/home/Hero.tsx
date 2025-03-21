@@ -105,19 +105,20 @@ export function Hero() {
       {/* Main content */}
       <div ref={textContainerRef} className="container relative z-10">
         <div className="mx-auto max-w-3xl text-center">
-          <h1 
-            ref={headingRef}
-            className="text-5xl sm:text-7xl font-bold tracking-tight bg-clip-text bg-gradient-to-r from-primary to-primary/50 [perspective:1000px]"
-          >
-            Learning Electronics  Engineering  Made  Simple
-      
-          </h1>
+        <h1 
+          ref={headingRef}
+          className="text-5xl sm:text-7xl font-bold tracking-tight bg-clip-text bg-gradient-to-r from-primary to-primary/50 [perspective:1000px]"
+        >
+          We're&nbsp;all&nbsp;about&nbsp;providing
+          hands&nbsp;on&nbsp;experiences
+        </h1>
+
 
           <p
             ref={subTextRef}
             className="mt-8 text-xl leading-8 text-muted-foreground"
           >
-           Technocrats is the Electronics Club of IIIT Guwahati, where passionate students come together to learn and build amazing things.
+           Technocrats is the Emerging Technologies Club of IIIT Guwahati, where we nuture interest in Robotics, IoT, Virtual and Mixed reality.
           </p>
 
           <div 

@@ -46,9 +46,15 @@ export function Footer() {
             className="md:col-span-4"
             variants={itemVariants}
           >
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="h-8 w-8 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600"></div>
-              <h2 className="text-xl font-bold">Technocrats</h2>
+           
+            <div className="flex items-center gap-3 hover:opacity-80 transition-opacity mb-7 mr-6">
+              <div className="w-40 h-14 bg-primary rounded-3xl flex items-center justify-center overflow-hidden">
+                <img 
+                  src="/assets/images/techno.jpg"
+                  alt="Technocrats Logo" 
+                  className="text-primary-foreground object-cover w-full h-full" 
+                />
+              </div>
             </div>
             <p className="text-gray-600 dark:text-gray-400 mb-6">
               Empowering technology enthusiasts with cutting-edge resources and knowledge to build the future.
