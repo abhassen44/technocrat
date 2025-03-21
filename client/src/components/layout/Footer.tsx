@@ -162,9 +162,6 @@ export function Footer() {
                   </motion.div>
                 </motion.button>
               </div>
-              <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                We respect your privacy. Unsubscribe anytime.
-              </p>
             </div>
           </motion.div>
         </motion.div>

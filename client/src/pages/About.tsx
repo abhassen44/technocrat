@@ -38,7 +38,7 @@ export default function About() {
       name: "Abhas sen",
       role: "lead developer and designer",
       bio: "passionate about creating user-friendly and efficient web applications.",
-      image: "/client/src/assets/abhas.png",
+      image: "/assets/images/abhas.png",
       expertise: ["web development", "ui/ux design", "react"],
       icon: <Cpu className="w-8 h-8" />,
       color: "from-blue-600 to-cyan-500",
@@ -63,36 +63,6 @@ export default function About() {
         linkedin: "https://linkedin.com/in/samchen"
       }
     },
-    {
-      id: 3,
-      name: "Marcus Rivera",
-      role: "Hardware Developer",
-      bio: "Passionate about circuit design and PCB layout with expertise in Arduino and Raspberry Pi platforms.",
-      image: "/api/placeholder/400/400",
-      expertise: ["PCB Design", "Arduino", "Raspberry Pi"],
-      icon: <MousePointer className="w-8 h-8" />,
-      color: "from-cyan-600 to-teal-500",
-      social: {
-        twitter: "https://twitter.com/marcusr",
-        github: "https://github.com/marcusr",
-        linkedin: "https://linkedin.com/in/marcusr"
-      }
-    },
-    {
-      id: 4,
-      name: "Priya Patel",
-      role: "Software Engineer",
-      bio: "Full-stack developer focused on creating intuitive interfaces for hardware control and data visualization.",
-      image: "/api/placeholder/400/400",
-      expertise: ["Full-Stack", "UI/UX", "Data Visualization"],
-      icon: <Code className="w-8 h-8" />,
-      color: "from-blue-500 to-purple-500",
-      social: {
-        twitter: "https://twitter.com/priyap",
-        github: "https://github.com/priyap",
-        linkedin: "https://linkedin.com/in/priyap"
-      }
-    }
   ];
 
   return (
