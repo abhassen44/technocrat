@@ -1,4 +1,7 @@
 import { Link } from "wouter";
+import { useEffect, useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -7,11 +10,8 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { ThemeToggle } from "../theme/ThemeToggle";
 import EventsLogo from "../ui/EventsLogo";
 import TutorialsLogo from "../ui/TutorialsLogo";
@@ -20,7 +20,24 @@ import ProjectsLogo from "../ui/ProjectsLogo";
 import MerchLogo from "../ui/MerchLogo";
 import AboutLogo from "../ui/AboutLogo";
 
-const menuItems = [
+// Type definitions
+interface MenuItem {
+  title: string;
+  href?: string;
+  type?: "dropdown";
+  items?: SubMenuItem[];
+  hasLogo?: boolean;
+}
+
+interface SubMenuItem {
+  title: string;
+  description?: string;
+  href: string;
+  featured?: boolean;
+  hasLogo?: boolean;
+}
+
+const menuItems: MenuItem[] = [
   {
     title: "Learn",
     type: "dropdown",
@@ -30,269 +47,250 @@ const menuItems = [
         description: "Step-by-step guides for electronics projects",
         href: "/tutorials",
         featured: true,
-        hasLogo: true
+        hasLogo: true,
       },
       {
         title: "Blogs",
         description: "Latest insights and tech articles",
         href: "/blogs",
-        hasLogo: true
+        hasLogo: true,
       },
     ],
   },
-  { 
-    title: "Events", 
-    href: "/events",
-    hasLogo: true 
-  },
-  { 
-    title: "Projects", 
-    href: "/projects",
-    hasLogo: true 
-  },
-  { 
-    title: "Merch", 
-    href: "/merch",
-    hasLogo: true 
-  },
-  { 
-    title: "About", 
-    href: "/about",
-    hasLogo: true 
-  },
+  { title: "Events", href: "/events", hasLogo: true },
+  { title: "Projects", href: "/projects", hasLogo: true },
+  { title: "Merch", href: "/merch", hasLogo: true },
+  { title: "About", href: "/about", hasLogo: true },
 ];
+
+const LogoMap = {
+  Tutorials: TutorialsLogo,
+  Blogs: BlogsLogo,
+  Events: EventsLogo,
+  Projects: ProjectsLogo,
+  Merch: MerchLogo,
+  About: AboutLogo,
+};
+
+const MenuLink = ({
+  item,
+  className,
+  onClick,
+}: {
+  item: MenuItem | SubMenuItem;
+  className?: string;
+  onClick?: () => void;
+}) => {
+  const LogoComponent = item.hasLogo && item.title in LogoMap ? LogoMap[item.title as keyof typeof LogoMap] : null;
+
+  return (
+    <motion.a
+      className={cn(className)}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      onClick={onClick}
+    >
+      {LogoComponent ? (
+        <LogoComponent width={100} height={30} className="text-foreground dark:text-white" />
+      ) : (
+        <span className="relative z-10">{item.title}</span>
+      )}
+      {"description" in item && item.description && (
+        <p className="text-sm text-muted-foreground mt-1 relative z-10">{item.description}</p>
+      )}
+    </motion.a>
+  );
+};
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "unset";
+  }, [isMobileMenuOpen]);
+
+  const toggleMobileMenu = () => setIsMobileMenuOpen((prev) => !prev);
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   return (
     <header
       className={cn(
         "sticky top-0 z-50 w-full transition-all duration-300",
         isScrolled
-          ? "border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm"
+          ? "border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-lg"
           : "bg-transparent"
       )}
     >
-      <div className="container flex h-16 items-center justify-between px-4">
+      <div className="container flex h-16 items-center justify-between px-4 relative">
+        {/* Logo */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="font-bold text-2xl flex items-center gap-2"
+          transition={{ duration: 0.5 }}
+          className="flex items-center gap-3"
         >
-          <Link href="/">
-            <div className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <div className="w-40 h-14 bg-primary rounded-3xl flex items-center justify-center overflow-hidden">
-                <img 
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }} 
-                  src="/assets/images/techno.jpg"
-                  alt="Technocrats Logo" 
-                  className="text-primary-foreground" 
-                />
-              </div>
-              {/* <span className="hidden sm:inline text-2xl font-bold text-foreground dark:text-white">Technocrats</span> */}
+          <Link href="/" className="hover:opacity-80 transition-opacity">
+            <div className="w-40 h-14 bg-primary rounded-full overflow-hidden shadow-md">
+              <img
+                src="/assets/images/techno.jpg"
+                alt="Technocrats Logo"
+                className="w-full h-full object-cover"
+              />
             </div>
           </Link>
         </motion.div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex md:items-center md:gap-4">
+        <div ref={navRef} className="hidden md:flex items-center gap-4 relative">
           <NavigationMenu>
-            <NavigationMenuList className="hidden md:flex">
-              {menuItems.map((item) => {
-                if (item.type === "dropdown") {
-                  return (
-                    <NavigationMenuItem key={item.title}>
+            <NavigationMenuList className="relative flex gap-2">
+              {menuItems.map((item) => (
+                <NavigationMenuItem
+                  key={item.title}
+                  onMouseEnter={() => setHoveredItem(item.title)}
+                  onMouseLeave={() => setHoveredItem(null)}
+                  className="relative"
+                >
+                  {item.type === "dropdown" ? (
+                    <>
                       <NavigationMenuTrigger
                         className={cn(
-                          "text-lg font-medium",
-                          isScrolled ? "text-foreground" : "text-black",
-                          "dark:text-white hover:text-accent-foreground dark:hover:text-accent-foreground"
+                          "text-lg font-medium px-4 py-2 rounded-full transition-all duration-200 relative z-10",
+                          isScrolled ? "text-foreground" : "text-black dark:text-white",
+                          hoveredItem === item.title && "text-primary"
                         )}
                       >
                         {item.title}
                       </NavigationMenuTrigger>
-                      <NavigationMenuContent>
+                      <NavigationMenuContent className="bg-background/95 backdrop-blur-md border rounded-lg shadow-xl">
                         <ul className="grid gap-3 p-6 w-[400px]">
                           {item.items?.map((subItem) => (
                             <li key={subItem.title} className={cn(subItem.featured && "row-span-2")}>
-                              <Link href={subItem.href || ""}>
-                                <NavigationMenuLink asChild>
-                                  <motion.a
-                                    className={cn(
-                                      "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
-                                      "text-foreground dark:text-white",
-                                      "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                                    )}
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                  >
-                                    {subItem.hasLogo ? (
-                                      subItem.title === "Tutorials" ? (
-                                        <TutorialsLogo width={120} height={30} className="text-foreground dark:text-white" />
-                                      ) : subItem.title === "Blogs" ? (
-                                        <BlogsLogo width={100} height={30} className="text-foreground dark:text-white" />
-                                      ) : (
-                                        <div className="text-sm font-medium leading-none text-foreground dark:text-white">{subItem.title}</div>
-                                      )
-                                    ) : (
-                                      <div className="text-sm font-medium leading-none text-foreground dark:text-white">{subItem.title}</div>
-                                    )}
-                                    {subItem.description && (
-                                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground dark:text-muted-foreground mt-1">
-                                        {subItem.description}
-                                      </p>
-                                    )}
-                                  </motion.a>
-                                </NavigationMenuLink>
-                              </Link>
+                              <NavigationMenuLink asChild>
+                                <Link href={subItem.href}>
+                                  <MenuLink
+                                    item={subItem}
+                                    className="block space-y-1 rounded-md p-3 hover:bg-accent/80 transition-colors"
+                                  />
+                                </Link>
+                              </NavigationMenuLink>
                             </li>
                           ))}
                         </ul>
                       </NavigationMenuContent>
-                    </NavigationMenuItem>
-                  );
-                } else {
-                  return (
-                    <NavigationMenuItem key={item.title}>
+                    </>
+                  ) : (
+                    <NavigationMenuLink asChild>
                       <Link href={item.href || ""}>
-                        <NavigationMenuLink asChild>
-                          <motion.a
-                            className={cn(
-                              "block select-none rounded-md px-4 py-2 leading-none no-underline outline-none transition-colors text-lg font-medium",
-                              "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-                              isScrolled ? "text-foreground" : "text-black",
-                              "dark:text-white"
-                            )}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            {item.hasLogo ? (
-                              item.title === "Events" ? (
-                                <EventsLogo width={100} height={30} className="text-foreground dark:text-white" />
-                              ) : item.title === "Projects" ? (
-                                <ProjectsLogo width={100} height={30} className="text-foreground dark:text-white" />
-                              ) : item.title === "Merch" ? (
-                                <MerchLogo width={100} height={30} className="text-foreground dark:text-white" />
-                              ) : item.title === "About" ? (
-                                <AboutLogo width={100} height={30} className="text-foreground dark:text-white" />
-                              ) : (
-                                item.title
-                              )
-                            ) : (
-                              item.title
-                            )}
-                          </motion.a>
-                        </NavigationMenuLink>
+                        <MenuLink
+                          item={item}
+                          className={cn(
+                            "px-4 py-2 text-lg font-medium rounded-full transition-all duration-200 relative z-10",
+                            "hover:text-primary",
+                            isScrolled ? "text-foreground" : "text-black dark:text-white",
+                            hoveredItem === item.title && "text-primary"
+                          )}
+                        />
                       </Link>
-                    </NavigationMenuItem>
-                  );
-                }
-              })}
+                    </NavigationMenuLink>
+                  )}
+                  {/* Slider Background */}
+                  <AnimatePresence>
+                    {hoveredItem === item.title && (
+                      <motion.div
+                        className="absolute inset-0 bg-accent/20 rounded-full -z-10 shadow-sm"
+                        layoutId="nav-slider"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
+                      />
+                    )}
+                  </AnimatePresence>
+                </NavigationMenuItem>
+              ))}
             </NavigationMenuList>
           </NavigationMenu>
           <ThemeToggle />
         </div>
 
-        {/* Mobile Menu Button and Theme Toggle */}
+        {/* Mobile Controls */}
         <div className="md:hidden flex items-center gap-2">
           <ThemeToggle />
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
+            onClick={toggleMobileMenu}
+            className="rounded-full hover:bg-accent/20"
           >
-            {isMobileMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
+            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      <motion.div
-        className="md:hidden"
-        initial={false}
-        animate={{
-          height: isMobileMenuOpen ? "auto" : 0,
-          opacity: isMobileMenuOpen ? 1 : 0,
-        }}
-        transition={{
-          duration: 0.2,
-          ease: "easeInOut",
-        }}
-      >
-        <div className="border-t px-4 py-4 space-y-4">
-          {menuItems.map((item) => (
-            <div key={item.title}>
-              {item.type === "dropdown" ? (
-                <div className="space-y-2">
-                  <div className="font-medium text-sm text-foreground dark:text-white">{item.title}</div>
-                  {item.items?.map((subItem) => (
-                    <Link key={subItem.title} href={subItem.href || ""}>
-                      <motion.a
-                        className={cn(
-                          "block px-2 py-1.5 text-sm rounded-md hover:bg-accent",
-                          "text-foreground dark:text-white hover:text-accent-foreground dark:hover:text-accent-foreground"
-                        )}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        {subItem.hasLogo ? (
-                          subItem.title === "Tutorials" ? (
-                            <TutorialsLogo width={100} height={30} className="text-background dark:text-white " />
-                          ) : subItem.title === "Blogs" ? (
-                            <BlogsLogo width={80} height={30} className="text-background dark:text-white " />
-                          ) : (
-                            <span className="text-background dark:text-white ">{subItem.title}</span>
-                          )
-                        ) : (
-                          subItem.title
-                        )}
-                      </motion.a>
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            className="md:hidden fixed inset-0 z-40 bg-background/95 backdrop-blur-md"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeMobileMenu}
+          >
+            <motion.div
+              className="absolute top-16 inset-x-0 px-4 py-6 space-y-6 max-h-[calc(100vh-4rem)] overflow-y-auto bg-background/90 rounded-t-xl shadow-xl"
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {menuItems.map((item) => (
+                <motion.div
+                  key={item.title}
+                  className="space-y-3"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                >
+                  {item.type === "dropdown" ? (
+                    <>
+                      <div className="font-medium text-sm text-foreground px-3">{item.title}</div>
+                      {item.items?.map((subItem) => (
+                        <Link key={subItem.title} href={subItem.href}>
+                          <MenuLink
+                            item={subItem}
+                            className="block px-4 py-2 text-sm rounded-lg hover:bg-accent/20 transition-colors"
+                            onClick={closeMobileMenu}
+                          />
+                        </Link>
+                      ))}
+                    </>
+                  ) : (
+                    <Link href={item.href || ""}>
+                      <MenuLink
+                        item={item}
+                        className="block px-4 py-2 text-base font-medium rounded-lg hover:bg-accent/20 transition-colors"
+                        onClick={closeMobileMenu}
+                      />
                     </Link>
-                  ))}
-                </div>
-              ) : (
-                <Link href={item.href || ""}>
-                  <motion.a
-                    className="block px-2 py-1.5 text-base font-medium rounded-md hover:bg-accent text-foreground dark:text-white hover:text-accent-foreground dark:hover:text-accent-foreground"
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    {item.hasLogo ? (
-                      item.title === "Events" ? (
-                        <EventsLogo width={100} height={35} className="text-foreground dark:text-white" />
-                      ) : item.title === "Projects" ? (
-                        <ProjectsLogo width={115} height={35} className="text-foreground dark:text-white" />
-                      ) : item.title === "Merch" ? (
-                        <MerchLogo width={100} height={35} className="text-foreground dark:text-white" />
-                      ) : item.title === "About" ? (
-                        <AboutLogo width={100} height={35} className="text-foreground dark:text-white" />
-                      ) : (
-                        item.title
-                      )
-                    ) : (
-                      item.title
-                    )}
-                  </motion.a>
-                </Link>
-              )}
-            </div>
-          ))}
-        </div>
-      </motion.div>
+                  )}
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

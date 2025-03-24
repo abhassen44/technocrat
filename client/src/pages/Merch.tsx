@@ -219,7 +219,7 @@ const ProductCard = ({ item }: { item: MerchItem }) => {
           </CardContent>
           <CardFooter>
             <Button 
-              className="w-full bg-primary hover:bg-primary/90 text-white font-medium rounded-full"
+              className="w-full bg-primary hover:bg-primary/90 bg-black text-white dark:bg-white dark:text-black font-medium rounded-full"
               style={{
                 transform: isHovered ? "translateZ(20px)" : "translateZ(0)",
                 transition: "transform 0.2s ease"
@@ -230,7 +230,12 @@ const ProductCard = ({ item }: { item: MerchItem }) => {
               }}
             >
               <ShoppingBag className="mr-2 h-4 w-4" />
-              Add to Cart
+              <div className="bg-black text-white dark:bg-white dark:text-black">
+                   Add to Cart
+                </div>
+
+              
+              
             </Button>
           </CardFooter>
         </Card>
