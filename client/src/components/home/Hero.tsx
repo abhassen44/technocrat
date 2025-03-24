@@ -104,26 +104,26 @@ export function Hero() {
 
       {/* Main content */}
       <div ref={textContainerRef} className="container relative z-10">
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="mx-auto max-w-full text-center px-4">
         <h1 
           ref={headingRef}
-          className="text-5xl sm:text-7xl font-bold tracking-tight bg-clip-text bg-gradient-to-r from-primary to-primary/50 [perspective:1000px]"
+          className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight bg-clip-text bg-gradient-to-r from-primary to-primary/50 [perspective:1000px] p-6"
         >
-          We're&nbsp;all&nbsp;about&nbsp;providing
-          hands&nbsp;on&nbsp;experiences
+         We're&nbsp;all&nbsp;about&nbsp;providing
+         hands&nbsp;on&nbsp;experiences
         </h1>
-
 
           <p
             ref={subTextRef}
-            className="mt-8 text-xl leading-8 text-muted-foreground"
+            className="mt-8 text-lg md:text-xl leading-8 text-muted-foreground"
           >
-           Technocrats is the Emerging Technologies Club of IIIT Guwahati, where we nuture interest in Robotics, IoT, Virtual and Mixed reality.
+           Technocrats is the Emerging Technologies Club of IIIT Guwahati, where we nurture<br />
+           interest in Robotics, IoT, Virtual and Mixed reality.
           </p>
 
           <div 
             ref={buttonsRef}
-            className="mt-12 flex items-center justify-center gap-6"
+            className="mt-12 flex items-center justify-center gap-6 flex-wrap"
           >
             <Link href="/tutorials">
               <Button 
@@ -158,3 +158,4 @@ export function Hero() {
     </div>
   );
 }
+  
