@@ -11,9 +11,13 @@ import Events from "@/pages/Events";
 import Projects from "@/pages/Projects";
 import About from "@/pages/About";
 import Merch from "@/pages/Merch";
+import ProductDetail from "@/pages/ProductDetail";
 import NotFound from "@/pages/not-found";
 import { ThemeProvider } from "./components/theme/ThemeProvider";
 import { RobotCursor } from "@/components/home/RobotCursor";
+import { CartProvider } from "@/components/shop/CartContext";
+import CartDrawer from "@/components/shop/CartDrawer";
+
 const queryClient = new QueryClient();
 
 function Router() {
@@ -22,6 +26,7 @@ function Router() {
       <ParticleBackground />
       <RobotCursor />
       <Navbar />
+      <CartDrawer />
       <div className="flex-1">
         <Switch>
           <Route path="/" component={Home} />
@@ -30,6 +35,7 @@ function Router() {
           <Route path="/events" component={Events} />
           <Route path="/projects" component={Projects} />
           <Route path="/merch" component={Merch} />
+          <Route path="/product/:id" component={ProductDetail} />
           <Route path="/about" component={About} />
           <Route component={NotFound} />
         </Switch>
@@ -43,8 +49,10 @@ export default function App() {
   return (
     <ThemeProvider>
       <QueryClientProvider client={queryClient}>
-        <Router />
-        <Toaster />
+        <CartProvider>
+          <Router />
+          <Toaster />
+        </CartProvider>
       </QueryClientProvider>
     </ThemeProvider>
   );

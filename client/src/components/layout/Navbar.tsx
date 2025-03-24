@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "../theme/ThemeToggle";
+import CartButton from "../shop/CartButton";
 import EventsLogo from "../ui/EventsLogo";
 import TutorialsLogo from "../ui/TutorialsLogo";
 import BlogsLogo from "../ui/BlogsLogo";
@@ -220,11 +221,15 @@ export function Navbar() {
               ))}
             </NavigationMenuList>
           </NavigationMenu>
-          <ThemeToggle />
+          <div className="flex items-center gap-2">
+            <CartButton />
+            <ThemeToggle />
+          </div>
         </div>
 
         {/* Mobile Controls */}
         <div className="md:hidden flex items-center gap-2">
+          <CartButton />
           <ThemeToggle />
           <Button
             variant="ghost"
