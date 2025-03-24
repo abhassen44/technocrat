@@ -97,33 +97,33 @@ export function Hero() {
   return (
     <div 
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background to-background/80"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background to-background/80 py-16"
     >
       {/* Animated background grid */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
 
       {/* Main content */}
       <div ref={textContainerRef} className="container relative z-10">
-        <div className="mx-auto max-w-full text-center px-4">
-        <h1 
-          ref={headingRef}
-          className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight bg-clip-text bg-gradient-to-r from-primary to-primary/50 [perspective:1000px] p-6"
-        >
-         We're&nbsp;all&nbsp;about&nbsp;providing
-         hands&nbsp;on&nbsp;experiences
-        </h1>
+        <div className="mx-auto max-w-4xl text-center px-4">
+          <h1 
+            ref={headingRef}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-clip-text bg-gradient-to-r from-primary to-primary/50 [perspective:1000px] mb-8"
+          >
+            We're&nbsp; All&nbsp; About&nbsp; Providing&nbsp; Hands&nbsp;On&nbsp; Experiences&nbsp;
+          </h1>
 
           <p
             ref={subTextRef}
-            className="mt-8 text-lg md:text-xl leading-8 text-muted-foreground"
+            className="mt-6 mb-10 text-lg md:text-xl leading-relaxed text-muted-foreground max-w-2xl mx-auto"
           >
-           Technocrats is the Emerging Technologies Club of IIIT Guwahati, where we nurture<br />
-           interest in Robotics, IoT, Virtual and Mixed reality.
+            Technocrats is the Emerging Technologies Club of IIIT Guwahati, 
+            dedicated to nurturing interest in cutting-edge fields like 
+            Robotics, IoT, Virtual and Mixed Reality.
           </p>
 
           <div 
             ref={buttonsRef}
-            className="mt-12 flex items-center justify-center gap-6 flex-wrap"
+            className="flex items-center justify-center gap-6 flex-wrap"
           >
             <Link href="/tutorials">
               <Button 
@@ -158,4 +158,3 @@ export function Hero() {
     </div>
   );
 }
-  
