@@ -85,7 +85,7 @@ const CartItemComponent = ({ item }: { item: CartItem }) => {
           <p className="text-xs text-muted-foreground mb-2">Size: {item.variant}</p>
         )}
         
-        <p className="text-sm font-medium mb-2">${item.price.toFixed(2)}</p>
+        <p className="text-sm font-medium mb-2">₹{(item.price * 82).toFixed(2)}</p> {/* Assuming 1 USD = 82 INR */}
         
         <div className="flex items-center">
           <Button
@@ -107,7 +107,7 @@ const CartItemComponent = ({ item }: { item: CartItem }) => {
             <Plus className="h-3 w-3" />
           </Button>
           <span className="ml-auto font-medium">
-            ${(item.price * item.quantity).toFixed(2)}
+            ₹{(item.price * item.quantity * 82).toFixed(2)} {/* Assuming 1 USD = 82 INR */}
           </span>
         </div>
       </div>
@@ -182,16 +182,16 @@ export default function CartDrawer() {
               <div className="space-y-3">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Subtotal:</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>₹{(subtotal * 82).toFixed(2)}</span> {/* Assuming 1 USD = 82 INR */}
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Shipping:</span>
-                  <span>{shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}</span>
+                  <span>{shipping === 0 ? "Free" : `₹${(shipping * 82).toFixed(2)}`}</span> {/* Assuming 1 USD = 82 INR */}
                 </div>
                 <Separator />
                 <div className="flex justify-between font-medium">
                   <span>Total:</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>₹{(total * 82).toFixed(2)}</span> {/* Assuming 1 USD = 82 INR */}
                 </div>
                 
                 <div className="pt-4 space-y-3">
